@@ -8,6 +8,9 @@ on:
 permissions:
   contents: write
 
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
+
 jobs:
   build:
     strategy:
@@ -27,7 +30,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Nim
-        uses: jiro4989/setup-nim-action@v2
+        uses: nim-lang/setup-nim@v1
         with:
           nim-version: '2.0.0'
 
@@ -85,15 +88,20 @@ jobs:
           export CC=mipsel-openwrt-linux-musl-gcc
           export CXX=mipsel-openwrt-linux-musl-g++
 
-          # nimble 通过命令行参数传递编译选项
+          # nimble 通过命令行参数传递编译选项，单独传递每个 C 编译器参数避免解析问题
           nimble build \
             --cpu:mipsel \
             --os:linux \
             --cc:gcc \
             --gcc.exe:mipsel-openwrt-linux-musl-gcc \
             --gcc.linkerexe:mipsel-openwrt-linux-musl-gcc \
-            --passC:"-O2 -EL -msoft-float -static" \
-            --passL:"-static -lpthread -ldl" \
+            --passC:-O2 \
+            --passC:-EL \
+            --passC:-msoft-float \
+            --passC:-static \
+            --passL:-static \
+            --passL:-lpthread \
+            --passL:-ldl \
             -d:release \
             --mm:arc \
             --threads:off \
