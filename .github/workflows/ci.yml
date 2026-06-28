@@ -30,18 +30,19 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Nim
-        uses: nim-lang/setup-nim@v1
+        uses: jiro4989/setup-nim-action@v2
         with:
           nim-version: '2.0.0'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cache Nimble packages
         uses: actions/cache@v4
         with:
           path: |
-            ~/.nimble/pkgs
-            ~/.nimble/bin
-            ~/.cache/nim
-          key: ${{ runner.os }}-nim-${{ hashFiles('**/*.nimble', '**/*.nim') }}
+            ~/.nimble
+          key: ${{ runner.os }}-nimble-v2-${{ hashFiles('**/*.nimble', '**/*.nim') }}
+          restore-keys: |
+            ${{ runner.os }}-nimble-v2-
 
       - name: Build (Linux)
         if: matrix.target == 'linux'
