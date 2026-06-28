@@ -1,0 +1,9 @@
+desc|method|path|query|status|headers|request|response|delay_ms
+获取用户列表|GET|/api/users||200|application/json||[{"id":1,"name":"Alice"}]|0
+按状态查用户|GET|/api/users|status:active|200|application/json||[{"id":1}]|0
+创建用户|POST|/api/users||201|application/json|"name":"alice"|{"id":2,"name":"alice"}|0
+登录|POST|/api/login||200|application/json|"username":"alice"|{"token":"abc"}|0
+删除用户|DELETE|/api/users/{id}||204||||0
+hello|GET|/api/hello||200|||[{"id":1,"name":"Alice"}]|0 
+hello|POST|/api/hello1||200||{"id":1}|[{"id":1,"name":"Alice"}]|0
+hello|POST|/api/hello1||200||{"id":2}|[{"id":2,"name":"Alice"}]|0  

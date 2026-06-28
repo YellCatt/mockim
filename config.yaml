@@ -1,0 +1,5 @@
+# Mockim 服务配置
+port: 8080
+host: "0.0.0.0"
+# 可选：PSV 文件或目录路径，优先级低于命令行参数
+psv_path: "examples"
